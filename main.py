@@ -109,6 +109,7 @@ def maxSum(Z, X, Y):
     for i in range(0, len(Z)):
         s1 += (pow(Z[i] - X[i], 2))
         s2 += (pow(Z[i] - Y[i], 2))
+    return [s1, s2]
 
 
 def menu():
