@@ -94,12 +94,31 @@ def Table(i):
     plt.show()
 
 
+def MaxChange(Z, X, Y):
+    Max1 = abs(Z[0] - X[0])
+    Max2 = abs(Z[0] - Y[0])
+    for i in range(1, len(Z)):
+        Max1 = max(Max1, abs(Z[i] - X[i]))
+        Max2 = max(Max2, abs(Z[i] - Y[i]))
+    return [Max1, Max2]
+
+
+def maxSum(Z, X, Y):
+    s1 = 0
+    s2 = 0
+    for i in range(0, len(Z)):
+        s1 += (pow(Z[i] - X[i], 2))
+        s2 += (pow(Z[i] - Y[i], 2))
+
+
 def menu():
     print('1. Графики')
     print('2. Таблица')
     print('3. Просмотр таблицы (далее)')
     print('4. Просмотр таблицы (назад)')
     print('5. Изменения масштаба(график)')
+    # print('6. Максимальное расхождение')
+    # print('7. Какая-то сумма')
     print('6. Выход')
 
 
