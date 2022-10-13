@@ -103,7 +103,7 @@ def MaxChange(Z, X, Y):
     return [Max1, Max2]
 
 
-def maxSum(Z, X, Y):
+def MaxSum(Z, X, Y):
     s1 = 0
     s2 = 0
     for i in range(0, len(Z)):
@@ -118,9 +118,9 @@ def menu():
     print('3. Просмотр таблицы (далее)')
     print('4. Просмотр таблицы (назад)')
     print('5. Изменения масштаба(график)')
-    # print('6. Максимальное расхождение')
-    # print('7. Какая-то сумма')
-    print('6. Выход')
+    print('6. Максимальное расхождение')
+    print('7. Состояние равновесия')
+    print('8. Выход')
 
 
 Preparation()
@@ -183,6 +183,12 @@ while (exit):
             continue
         Scaling(x1, y1, x2, y2)
     elif select == 6:
+        print(MaxChange(a,b,c))
+        print(MaxSum(a,b,c))
+    elif select == 7:
+        continue
+        #Состояние равновесия
+    elif select == 8:
         exit = False
     else:
         print("Некорректный пункт меню")
