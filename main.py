@@ -1,4 +1,3 @@
-from asyncio.tasks import _T4
 from os import system
 import matplotlib.pyplot as plt
 import math
