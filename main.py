@@ -1,3 +1,4 @@
+from asyncio.tasks import _T4
 from os import system
 import matplotlib.pyplot as plt
 import math
@@ -10,11 +11,23 @@ a = []
 b = []
 c = []
 
+i=0
+t.append(0)
+while t[i]<0.5:
+    t.append(round(t[i]+h,2))
+    i += 1
+
+def ChangeF(f):
+    a.clear()
+    b.clear()
+    c.clear()
+    for i in range(0, len(t)):
+        a.append(round(f / ((1 + f) * pow(math.e, -t[i]) - f),2))
+        b.append(round(EulerB(a[i]),2))
+        c.append(round(Rectangle(a[i]),2))
+
 
 def Graph():
-    fig, ax = plt.subplots()
-    fig.set_figwidth(10)
-    fig.set_figheight(10)
     plt.grid()
     ax.plot(t, a, c='b')
     ax.plot(t, b, c='r')
@@ -26,10 +39,6 @@ def F(arg):
     return arg + pow(arg, 2)
 
 
-def DefaultDecisionA(arg):
-    return 1 / (3 / 2 * (pow(math.e, arg)) - 1) - 1
-
-
 def EulerB(arg):
     return arg + h * F(arg)
 
@@ -37,20 +46,6 @@ def EulerB(arg):
 def Rectangle(arg):
     tmp = arg + h / 2 * F(arg)
     return arg + h * F(tmp)
-
-
-def Preparation():
-    i = 0
-    t.append(0)
-    a.append(DefaultDecisionA(t[i]))
-    b.append(EulerB(a[i]))
-    c.append(Rectangle(a[i]))
-    while t[i] < 1:
-        i += 1
-        t.append(round(t[i - 1] + h, 2))
-        a.append(DefaultDecisionA(t[i]))
-        b.append(EulerB(a[i]))
-        c.append(Rectangle(a[i]))
 
 
 def Scaling(scX1, scY1, scX2, scY2):
@@ -63,7 +58,7 @@ def Scaling(scX1, scY1, scX2, scY2):
     plt.show()
 
 
-def Table(i):
+def Table():
     fig, ax = plt.subplots()
     fig.set_figwidth(10)
     fig.set_figheight(10)
@@ -72,13 +67,7 @@ def Table(i):
     ax.axis('off')
     col_labels = ['T', 'A', 'B', 'C']
     table_vals = []
-    if i == 0:
-        s = 55
-        o = 0
-    else:
-        o = 55
-        s = len(t)
-    for i in range(o, s):
+    for i in range(0, len(t)):
         tmp = [t[i], a[i], b[i], c[i]]
         table_vals.append(tmp)
 
@@ -97,9 +86,21 @@ def Table(i):
 def MaxChange(Z, X, Y):
     Max1 = abs(Z[0] - X[0])
     Max2 = abs(Z[0] - Y[0])
+    #print(t[0], end=' ')
+    #print(Z[0], end=' ')
+    #print(X[0], end=' ')
+    #print(Y[0], end=' ')
+    #print(Max1,end=' ')
+    #print(Max2)
     for i in range(1, len(Z)):
         Max1 = max(Max1, abs(Z[i] - X[i]))
         Max2 = max(Max2, abs(Z[i] - Y[i]))
+        #print(t[i], end=' ')
+        #print(Z[i], end=' ')
+        #print(X[i], end=' ')
+        #print(Y[i], end=' ')
+        #print(Max1, end=' ')
+        #print(Max2)
     return [Max1, Max2]
 
 
@@ -112,21 +113,34 @@ def MaxSum(Z, X, Y):
     return [s1, s2]
 
 
+def CheeckStability(r):
+    if r < 0:
+        return " Асимптотически устойчиво"
+    elif r > 0:
+       return " Не устойчиво"
+    else:
+        return " Нужна дополниельная проверка"
+
+
+def Stability():
+    x1 = -1
+    x2 = 0
+    print(str(x1) + " " + str(x2) + " Состояние рановесия")
+    Fx1 = 1 + 2 * x1
+    Fx2 = 1 + 2 * x2
+    print(str(x1)+ CheeckStability(Fx1))
+    print(str(x2)+ CheeckStability(Fx2))
+
+
 def menu():
-    print('1. Графики')
-    print('2. Таблица')
-    print('3. Просмотр таблицы (далее)')
-    print('4. Просмотр таблицы (назад)')
-    print('5. Изменения масштаба(график)')
-    print('6. Максимальное расхождение')
-    print('7. Состояние равновесия')
-    print('8. Выход')
+    print('1. Меняем F')
+    print('2. Графики')
+    print('3. Таблица')
+    print('4. Максимальное расхождение')
+    print('5. Состояние равновесия')
+    print('6. Выход')
 
 
-Preparation()
-ts = 0
-gr = False
-tb = False
 exit = True
 while (exit):
     print('Для продожений нажмите Enter')
@@ -136,59 +150,19 @@ while (exit):
     print('Выберете действие:', end='')
     select = int(input())
     if select == 1:
-        Graph()
-        gr = True
-        tb = False
+        print("Введите значение f=", end='')
+        f = int(input())
+        ChangeF(f)
     elif select == 2:
-        Table(ts)
-        gr = False
-        tb = True
+        Graph()
     elif select == 3:
-        if not tb:
-            print('Для продлжения выберите пункт 2')
-            continue
-        ts += 1
-        if (ts > 4):
-            ts = 0
-        Table(ts)
+        Table()
     elif select == 4:
-        if not tb:
-            print('Для продлжения выберите пункт 2')
-            continue
-        ts -= 1
-        if (ts < 0):
-            ts = 1
-        Table(ts)
+        print(MaxChange(a, b, c))
+        print(MaxSum(a, b, c))
     elif select == 5:
-        if not gr:
-            print('Для продлжения выберите пункт 1')
-            continue
-        print('Введите область по X: ', end='')
-        strx = input()
-        arrX = strx.split(' ')
-        if len(arrX) == 2:
-            x1 = float(arrX[0])
-            x2 = float(arrX[1])
-        else:
-            print('Неверное количество значений')
-            continue
-        print('Введите область по Y: ', end='')
-        stry = input()
-        arrY = stry.split(' ')
-        if len(arrY) == 2:
-            y1 = float(arrY[0])
-            y2 = float(arrY[1])
-        else:
-            print('Неверное количество значений')
-            continue
-        Scaling(x1, y1, x2, y2)
+        Stability()
     elif select == 6:
-        print(MaxChange(a,b,c))
-        print(MaxSum(a,b,c))
-    elif select == 7:
-        continue
-        #Состояние равновесия
-    elif select == 8:
         exit = False
     else:
         print("Некорректный пункт меню")
