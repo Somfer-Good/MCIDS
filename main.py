@@ -4,22 +4,22 @@ import math
 
 fig, ax = plt.subplots()
 
-h = 0.01
+h=0
 t = []
 a = []
 b = []
 c = []
 
-i=0
-t.append(0)
-while t[i]<0.5:
-    t.append(round(t[i]+h,2))
-    i += 1
-
-def ChangeF(f):
+def Init(f,x,y):
+    #print(type(f),type(x),type(y),type(h))
     a.clear()
     b.clear()
     c.clear()
+    i=0
+    t.append(x)
+    while t[i]<y:
+        t.append(round(t[i]+h,2))
+        i += 1
     for i in range(0, len(t)):
         a.append(round(f / ((1 + f) * pow(math.e, -t[i]) - f),2))
         b.append(round(EulerB(a[i]),2))
@@ -132,7 +132,7 @@ def Stability():
 
 
 def menu():
-    print('1. Меняем F')
+    print('1. Меняем начальные настройки')
     print('2. Графики')
     print('3. Таблица')
     print('4. Максимальное расхождение')
@@ -144,14 +144,27 @@ exit = True
 while (exit):
     print('Для продожений нажмите Enter')
     input()
-    system('clear')
+    system("cls")
     menu()
     print('Выберете действие:', end='')
     select = int(input())
     if select == 1:
         print("Введите значение f=", end='')
         f = int(input())
-        ChangeF(f)
+        print("Введите диапазон значений: ", end='')
+        str = input()
+        arr = str.split(' ')
+        if len(arr) == 2:
+            x = float(arr[0])
+            y = float(arr[1])
+        else:
+            print('Неверное количество значений')
+            continue
+        print('Введите шаг:', end='')
+        str = input()
+        harr = str.split(' ')
+        h=float(harr[0])
+        Init(f,x,y)
     elif select == 2:
         Graph()
     elif select == 3:
