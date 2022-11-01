@@ -17,7 +17,7 @@ def Init(f,x,y):
     c.clear()
     i=0
     t.append(x)
-    while t[i]<y:
+    while t[i]+h<y:
         t.append(round(t[i]+h,2))
         i += 1
     for i in range(0, len(t)):
@@ -100,7 +100,7 @@ def MaxChange(Z, X, Y):
         #print(Y[i], end=' ')
         #print(Max1, end=' ')
         #print(Max2)
-    return [Max1, Max2]
+    return [Max2, Max1]
 
 
 def MaxSum(Z, X, Y):
@@ -109,7 +109,7 @@ def MaxSum(Z, X, Y):
     for i in range(0, len(Z)):
         s1 += (pow(Z[i] - X[i], 2))
         s2 += (pow(Z[i] - Y[i], 2))
-    return [s1, s2]
+    return [s2, s1]
 
 
 def CheeckStability(r):
@@ -124,11 +124,15 @@ def CheeckStability(r):
 def Stability():
     x1 = -1
     x2 = 0
-    print(str(x1) + " " + str(x2) + " Состояние рановесия")
+    print(x1, end=' ')
+    print(x2, end=' ')
+    print("Состояние рановесия")
     Fx1 = 1 + 2 * x1
     Fx2 = 1 + 2 * x2
-    print(str(x1)+ CheeckStability(Fx1))
-    print(str(x2)+ CheeckStability(Fx2))
+    print(x1, end=' ')
+    print(CheeckStability(Fx1))
+    print(x2, end=' ')
+    print(CheeckStability(Fx2))
 
 
 def menu():
@@ -165,6 +169,7 @@ while (exit):
         harr = str.split(' ')
         h=float(harr[0])
         Init(f,x,y)
+        print('Настройки сохранены')
     elif select == 2:
         Graph()
     elif select == 3:
