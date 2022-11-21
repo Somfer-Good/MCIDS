@@ -1,0 +1,52 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{amsfonts}
+\usepackage{mathtext}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage[T2A]{fontenc}    
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[body={16cm, 26.7cm},left= 2.53cm, top=1.53cm]{geometry}
+\usepackage{indentfirst}
+\usepackage[]{graphicx}
+\usepackage{floatflt}
+\usepackage{amsthm}
+\usepackage[usenames]{color}
+\usepackage[inline]{enumitem}
+
+\begin{document}
+    \begin{center}
+        \large
+        \textbf{Отчет по методам компьютерного исследования динамических систем.}
+        
+        \textbf{Лабораторная работа №1.}
+    \end{center}
+    
+\noindent Цель: решить уравнение $x'=x+x^2$. Выяснить точность метода Эйлера и метода прямоугольников.
+
+\noindent Начальные условия: Возьмем $f=1$. Отрезок $t \in [0, 0.5]$ с шагом $h=0.01$.
+
+\noindent Ход работы:
+
+1. Состояния равновесия находим через производную $F(x)=x+x^2$. Производная равна $F'(x)=1+2x$. Состояния равновесия $x=0$ и $x=-1$. Проанализировав получаем, что $x=-1$ асимптотически устойчиво, а $x=0$ не устойчиво.
+
+2. Решим уравнение методом Эйлера. Уравнение $x(t_n)=x(t_{n-1})+hF(x(t_{n-1}))$. При $h=0.01$ и $F(x)=x+x^2$
+
+3. Решим уравнение методом прямоугольников. Уравнения $x(t_{n/2})=x(t_{n-1})+\frac{h}{2}F(x(t_{n-1}))$ и $x(t_{n})=x(t_{n-1})+hF(x(t_{n/2}))$. При $h=0.01$ и $F(x)=x+x^2$
+
+4. Значения уравнений при $t \in [0, 0.5]$ с шагом $h=0.01$:
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{Решения.png}
+    \end{figure}
+
+\newpage
+
+5. Максимальное расхождение метода Эйлера с точным вычислением составляет $0.25$. А метода прямоугольников $0.24$ 
+
+6. Среднее квадратичное метода Эйлера составляет $0.4457$, а метода прямоугольника $0.4098$
+
+\noindent Заключение: Погрешность метода Эйлера больше, чем метода прямоугольников. 
+\
+\noindent Для данной лабораторной работы использовались средства: Python. Библиотеки: matplotlib, math
+    
+\end{document}
